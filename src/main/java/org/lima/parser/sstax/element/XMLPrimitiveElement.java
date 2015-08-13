@@ -7,7 +7,7 @@ import javax.xml.stream.XMLStreamException;
 import org.lima.parser.sstax.XMLParser;
 import org.lima.parser.sstax.util.GenericUtil;
 
-public class XMLPrimitiveElement<E> extends XMLAbstractSingleElement<Object> {
+public class XMLPrimitiveElement<E> extends XMLAbstractSingleElement<E> {
 	private Class<E> clazz;
 
 	public XMLPrimitiveElement(Class<E> clazz) throws Exception {
