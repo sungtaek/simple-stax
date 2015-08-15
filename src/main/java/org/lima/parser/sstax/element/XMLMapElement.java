@@ -12,10 +12,10 @@ public class XMLMapElement extends XMLAbstractSingleElement<Map<String,Object>> 
 	private Map<String, XMLElement<?>> childElements = new HashMap<String, XMLElement<?>>();
 	private boolean enableAttr = false;
 
-	public XMLMapElement setDefaultElement(XMLElement<?> element) {
-		this.defaultElement = element;
-		return this;
+	public XMLMapElement(XMLElement<?> defaultElement) {
+		this.defaultElement = defaultElement;
 	}
+
 	public XMLMapElement addChildElement(String key, XMLElement<?> element) {
 		childElements.put(key, element);
 		return this;

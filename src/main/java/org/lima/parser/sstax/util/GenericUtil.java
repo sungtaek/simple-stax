@@ -24,10 +24,10 @@ public class GenericUtil {
 		return m;
 	}
 	
-	public static Class<?> getActualType(Type genericType) {
+	public static Class<?>[] getActualTypes(Type genericType) {
         if (ParameterizedType.class.isAssignableFrom(genericType.getClass())) {
             ParameterizedType type = (ParameterizedType) genericType;
-            return ((Class<?>) type.getActualTypeArguments()[0]);
+            return ((Class<?>[]) type.getActualTypeArguments());
         }
         return null;
     }

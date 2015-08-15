@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
@@ -131,18 +132,29 @@ public class XMLObjectElement<E> extends XMLAbstractSingleElement<E> {
 				setter.invoke(obj, new XMLPrimitiveElement(fieldType).parse(parser));
 				return obj;
 			}
-			else if(Collection.class.isAssignableFrom(fieldType)) {
-				Class<?> actualType = GenericUtil.getActualType(setter.getGenericParameterTypes()[0]);
+			else if(fieldType == List.class) {
+				Class<?> actualType = GenericUtil.getActualTypes(setter.getGenericParameterTypes()[0])[0];
 				//System.out.println("	actualType[" + actualType+ "]");
-				if(GenericUtil.isPrimitiveType(actualType)) {
-					setter.invoke(obj, new XMLPrimitiveElement(actualType).parse(parser));
-					return obj;
+				if(Collection.class.isAssignableFrom(actualType)
+						|| Map.class.isAssignableFrom(actualType)) {
+					throw new XMLStreamException("not support type: " + fieldType);
 				}
-				else if(Collection.class.isAssignableFrom(actualType)) {
-					throw new XMLStreamException("not support: list in list");
+				else if(GenericUtil.isPrimitiveType(actualType)) {
+					setter.invoke(obj, new XMLListElement(null, new XMLPrimitiveElement(actualType)).parse(parser));
+					return obj;
 				}
 				else {
 					setter.invoke(obj, new XMLListElement(null, new XMLObjectElement(actualType)).parse(parser));
+					return obj;
+				}
+			}
+			else if(fieldType == Map.class) {
+				Class<?> types[] = GenericUtil.getActualTypes(setter.getGenericParameterTypes()[0]);
+				if(types.length != 2 || (types[0] != String.class && types[1]== String.class)) {
+					throw new XMLStreamException("not support type: " + fieldType);
+				}
+				else {
+					setter.invoke(obj,  new XMLMapElement(new XMLStringElement()).parse(parser));
 					return obj;
 				}
 			}
@@ -162,20 +174,32 @@ public class XMLObjectElement<E> extends XMLAbstractSingleElement<E> {
 				field.set(obj, new XMLPrimitiveElement(fieldType).parse(parser));
 				return obj;
 			}
-			else if(Collection.class.isAssignableFrom(fieldType)) {
-				Class<?> actualType = GenericUtil.getActualType(field.getGenericType());
-				if(GenericUtil.isPrimitiveType(actualType)) {
-					field.set(obj, new XMLPrimitiveElement(actualType).parse(parser));
-					return obj;
+			else if(fieldType == List.class) {
+				Class<?> actualType = GenericUtil.getActualTypes(field.getGenericType())[0];
+				if(Collection.class.isAssignableFrom(actualType)
+						|| Map.class.isAssignableFrom(actualType)) {
+					throw new XMLStreamException("not support type: " + fieldType);
 				}
-				else if(Collection.class.isAssignableFrom(actualType)) {
-					throw new XMLStreamException("not support: list in list");
+				else if(GenericUtil.isPrimitiveType(actualType)) {
+					field.set(obj, new XMLListElement(null, new XMLPrimitiveElement(actualType)).parse(parser));
+					return obj;
 				}
 				else {
 					field.set(obj, new XMLListElement(null, new XMLObjectElement(actualType)).parse(parser));
 					return obj;
 				}
 			}
+			else if(fieldType == Map.class) {
+				Class<?> types[] = GenericUtil.getActualTypes(field.getGenericType());
+				if(types.length != 2 || (types[0] != String.class && types[1]== String.class)) {
+					throw new XMLStreamException("not support type: " + fieldType);
+				}
+				else {
+					field.set(obj,  new XMLMapElement(new XMLStringElement()).parse(parser));
+					return obj;
+				}
+			}
+
 			else {
 				field.set(obj, new XMLObjectElement(fieldType).parse(parser));
 				return obj;
