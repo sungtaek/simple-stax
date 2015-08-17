@@ -25,10 +25,15 @@ public class GenericUtil {
 	}
 	
 	public static Class<?>[] getActualTypes(Type genericType) {
-        if (ParameterizedType.class.isAssignableFrom(genericType.getClass())) {
-            ParameterizedType type = (ParameterizedType) genericType;
-            return ((Class<?>[]) type.getActualTypeArguments());
-        }
-        return null;
-    }
+		if (ParameterizedType.class.isAssignableFrom(genericType.getClass())) {
+			ParameterizedType type = (ParameterizedType) genericType;
+			Type[] actualTypeArgs  = type.getActualTypeArguments();
+			Class<?>[] actualTypes = new Class<?>[actualTypeArgs.length];
+			for(int i=0; i<actualTypeArgs.length; i++) {
+				actualTypes[i] = (Class<?>)actualTypeArgs[i];
+			}
+			return actualTypes;
+		}
+		return null;
+	}
 }
