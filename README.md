@@ -5,10 +5,19 @@ You can easily parse the xml to object by Element unit.
 In addition, it is faster because the stream based parsing.
 It can parse to various types such as String, Integer, Boolean, Map, List ... and your specific Object.
 
-# How to use
-## xml
------
-“`
+## Getting Started
+add dependency to your pom.xml
+```xml
+<dependency>
+  <groupId>org.lima.parser</groupId>
+  <artifactId>simple-stax</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
+## Example
+xml:
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <info>
   <version>1</version>
@@ -33,18 +42,17 @@ It can parse to various types such as String, Integer, Boolean, Map, List ... an
     </credits>
   </movie>
 </movie-list>
-“`
+```
 
-## If you want to parse info element
------
-“`
+If you want to parse info element:
+```java
 class Info {
   public String id;
   public String title;
   public List<String> credits;
 }
-“`
-“`
+```
+```java
 import org.lima.parser.sstax.XMLParser;
 
 class Main {
@@ -55,17 +63,16 @@ class Main {
     
   }
 }
-“`
+```
 
-## If you want to parse movie-list element
------
-“`
+If you want to parse movie-list element
+```java
 class Movie {
   public Iteger version;
   public String name;
 }
-“`
-“`
+```
+```java
 import org.lima.parser.sstax.XMLParser;
 
 class Main {
@@ -82,4 +89,4 @@ class Main {
     }
   }
 }
-“`
+```
