@@ -1,9 +1,9 @@
 simple-stax
 ============
 simple xml parser based on StAX.
-You can easily parse the xml to object by Element unit.
-In addition, it is faster because the stream based parsing.
-It can parse to various types such as String, Integer, Boolean, Map, List ... and your specific Object.
+* You can easily parse the xml to object by Element unit.
+* In addition, it is faster because the stream based parsing.
+* It can parse to various types such as String, Integer, Boolean, Map, List ... and your specific Object.
 
 ## Getting Started
 add dependency to your pom.xml
@@ -16,7 +16,7 @@ add dependency to your pom.xml
 ```
 
 ## Example
-xml:
+* your/xml/file:
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <info>
@@ -44,7 +44,7 @@ xml:
 </movie-list>
 ```
 
-If you want to parse info element:
+* If you want to parse info element:
 ```java
 class Info {
   public String id;
@@ -65,7 +65,7 @@ class Main {
 }
 ```
 
-If you want to parse movie-list element
+* If you want to parse movie-list element:
 ```java
 class Movie {
   public Iteger version;
