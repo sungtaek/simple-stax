@@ -8,6 +8,7 @@ It can parse to various types such as String, Integer, Boolean, Map, List ... an
 # How to use
 ## xml
 -----
+“`
 <?xml version="1.0" encoding="UTF-8" ?>
 <info>
   <version>1</version>
@@ -32,15 +33,18 @@ It can parse to various types such as String, Integer, Boolean, Map, List ... an
     </credits>
   </movie>
 </movie-list>
+“`
 
 ## If you want to parse info element
 -----
+“`
 class Info {
   public String id;
   public String title;
   public List<String> credits;
 }
-
+“`
+“`
 import org.lima.parser.sstax.XMLParser;
 
 class Main {
@@ -51,14 +55,17 @@ class Main {
     
   }
 }
+“`
 
 ## If you want to parse movie-list element
 -----
+“`
 class Movie {
   public Iteger version;
   public String name;
 }
-
+“`
+“`
 import org.lima.parser.sstax.XMLParser;
 
 class Main {
@@ -75,4 +82,4 @@ class Main {
     }
   }
 }
-
+“`
