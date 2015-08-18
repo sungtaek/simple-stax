@@ -1,5 +1,4 @@
-simple-stax
-============
+#simple-stax
 simple xml parser based on StAX.
 * You can easily parse the xml to object by Element unit.
 * In addition, it is faster because the stream based parsing.
