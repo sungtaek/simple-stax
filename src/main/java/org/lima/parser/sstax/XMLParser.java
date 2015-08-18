@@ -1,8 +1,6 @@
 package org.lima.parser.sstax;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -24,9 +22,17 @@ public class XMLParser {
 	private XMLStreamReader xr = null;
 	private int depth = 0;
 	
-	public XMLParser(String file) throws FileNotFoundException, XMLStreamException {
+	public XMLParser(InputStream stream) throws Exception {
+		this(stream, null);
+	}
+	public XMLParser(InputStream stream, String encoding) throws Exception {
 		XMLInputFactory factory = XMLInputFactory.newInstance();
-		this.xr = factory.createXMLStreamReader(new FileInputStream(new File(file)));
+		if(encoding == null) {
+			this.xr = factory.createXMLStreamReader(stream);
+		}
+		else {
+			this.xr = factory.createXMLStreamReader(stream, encoding);
+		}
 		this.depth = 0;
 	}
 
@@ -174,7 +180,7 @@ public class XMLParser {
 		return --depth;
 	}
 
-	private boolean seekNext(String key) throws XMLStreamException {
+	private boolean seekNext(String key) throws Exception {
 		while(xr.hasNext()) {
 			switch(xr.next()) {
 			case XMLStreamConstants.START_ELEMENT:
