@@ -44,7 +44,7 @@ add dependency to your pom.xml
 </movie-list>
 ```
 
-* If you want to parse <info> element:
+* If you want to parse "info" element:
 ```java
 class Info {
   public String id;
@@ -65,7 +65,7 @@ class Main {
 }
 ```
 
-* If you want to parse <movie-list> element:
+* If you want to parse "movie-list" element:
 ```java
 class Movie {
   public Iteger version;
